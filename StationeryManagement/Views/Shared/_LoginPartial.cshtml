@@ -1,0 +1,32 @@
+﻿@if (User != null)
+{
+    <form asp-area="" asp-controller="Account" asp-action="Logout" id="logoutForm"
+          method="post" class="navbar-right">
+        <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+            @if (User.Claims.FirstOrDefault(s => s.Type == Constants.ImageSourceName) != null)
+            {
+                <img src="~/@User.Claims.FirstOrDefault(s => s.Type == Constants.ImageSourceName).Value" class="img-avatar avatar">
+            }
+            <span class="d-sm-down-none">Welcome @User.Identity.Name</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right">
+            <div class="dropdown-header text-center">
+                <strong>Account</strong>
+            </div>
+            <a class="dropdown-item " href="javascript:document.getElementById('logoutForm').submit()" role="button" aria-haspopup="true" aria-expanded="false">
+                <span><i class="fa fa-lock"></i>Logout</span>
+            </a>
+        </div>
+    </form>
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            <a class="nav-link" id="loginLink" asp-controller="Account" asp-action="Login" role="button" aria-haspopup="true" aria-expanded="false">
+                <span>Log in</span>
+            </a>
+        </li>
+    </ul>
+}
+

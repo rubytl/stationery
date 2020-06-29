@@ -1,0 +1,142 @@
+﻿
+@model UserRegisterViewModel
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a asp-controller="Home" asp-action="index">Home</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a asp-controller="Account" asp-action="index">Users</a>
+    </li>
+    <li class="breadcrumb-item active">New user</li>
+</ol>
+<div class="container-fluid">
+    <div class="animated fadeIn">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <strong>New user</strong>
+                        @if (ViewBag.Message != null)
+                        {
+                            <span class="badge-pill badge-success float-right">@ViewBag.Message</span>
+                        }
+                    </div>
+                    <form asp-controller="Account" id="newUserForm" asp-action="Register" method="post" class="form-horizontal" role="form" enctype="multipart/form-data">
+                        <div class="card-body was-validated">
+                            <span class="text-danger">* is required field</span>
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                            <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="inputUsername">User name</label>
+                                <div class="col-md-8">
+                                    <input asp-for="UserName" id="inputUsername" class="form-control is-invalid" required placeholder="Username" />
+                                    <span asp-validation-for="UserName" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-1">
+                                    <span class="text-danger">*</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="inputPass">Password</label>
+                                <div class="col-md-8">
+                                    <input asp-for="Password" id="inputPass" class="form-control is-invalid" required placeholder="Password" data-toggle="tooltip" data-placement="top" title="Password requires at least 6 characters, contains digit and non-alphanumeric" />
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-1">
+                                    <span class="text-danger">*</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="inputEmail">Email</label>
+                                <div class="col-md-8">
+                                    <input asp-for="Email" id="inputEmail" class="form-control is-invalid" required placeholder="Email" />
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-1">
+                                    <span class="text-danger">*</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="inputPhoneNo">Phone number</label>
+                                <div class="col-md-8">
+                                    <input asp-for="PhoneNo" id="inputPhoneNo" class="form-control is-invalid" required placeholder="Phone number" />
+                                    <span asp-validation-for="PhoneNo" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-1">
+                                    <span class="text-danger">*</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 form-control-label">Is active</label>
+                                <div class="col-md-9">
+                                    <input type="checkbox" asp-for="IsActive" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="text-input">Image</label>
+                                <div class="col-md-9">
+                                    <input type="file" name="file" class="file">
+                                    <div class="input-group col-xs-12">
+                                        <span class="input-group-addon"><i class="fa fa-asterisk"></i></span>
+                                        <input type="text" class="form-control input-lg" disabled placeholder="Upload Image File">
+                                        <span class="input-group-btn">
+                                            <button class="browse btn btn-primary input-lg" type="button"><i class="glyphicon glyphicon-search"></i> Browse</button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="text-input">Roles</label>
+                                <div class="col-md-8">
+                                    <select id="roleSearch" asp-items="@Model.Roles" multiple="multiple" class="form-control" selected="Selected"></select>
+                                    <span asp-validation-for="Roles" class="text-danger"></span>
+                                    <input type="hidden" name="roleSearchString" id="roleSearchString">
+                                </div>
+                                <div class="col-md-1">
+                                    <span class="text-danger">*</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button id="newUserSubmit" class="btn btn-sm btn-primary"><i class="fa fa-save"></i> Save changes</button>
+                            <a asp-action="Index" class="btn btn-sm btn-info"><i class="fa fa-th"></i> Back to list</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <link href="~/lib/dropdown-multiselection/bootstrap-multiselect.css" rel="stylesheet" />
+    <script src="~/lib/dropdown-multiselection/bootstrap-multiselect.js"></script>
+    <script>
+        $(document).on('click', '.browse', function () {
+            var file = $(this).parent().parent().parent().find('.file');
+            file.trigger('click');
+        });
+        $(document).on('change', '.file', function () {
+            $(this).parent().find('.form-control').val($(this).val().replace(/C:\\fakepath\\/i, ''));
+        });
+
+        function createRoleSearchValue() {
+            var selected = $("#roleSearch option:selected");
+            var message = "";
+            selected.each(function () {
+                message += $(this).text() + ",";
+            });
+            $('#roleSearchString').val(message);
+        }
+
+        $(function () {
+            $('#roleSearch').multiselect({
+                includeSelectAllOption: true,
+                enableCaseInsensitiveFiltering: true
+            });
+        });
+
+        $('#newUserSubmit').click(function () {
+            createRoleSearchValue();
+            $('#newUserForm').submit();
+        });
+    </script>
+}

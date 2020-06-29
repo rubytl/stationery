@@ -1,0 +1,45 @@
+﻿
+@model Product
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a asp-controller="Home" asp-action="Index">Home</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a asp-controller="SiteTemplate" asp-action="Index">Products</a>
+    </li>
+    <li class="breadcrumb-item active">New product</li>
+</ol>
+<div class="container-fluid">
+    <div class="animated fadeIn">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <strong>New product</strong>
+                        <span class="badge-pill badge-success float-right">@ViewBag.Message</span>
+                    </div>
+                    <form id="newUserForm" asp-action="Register" method="post" class="form-horizontal" role="form" enctype="multipart/form-data">
+                        <div class="card-body was-validated">
+                            <span class="text-danger">* is required field</span>
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                            <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="inputUsername">Name</label>
+                                <div class="col-md-8">
+                                    <input asp-for="Name" id="inputUsername" class="form-control is-invalid" required placeholder="Product name" />
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-1">
+                                    <span class="text-danger">*</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-save"></i> Add new product</button>
+                            <a asp-action="Index" class="btn btn-sm btn-info"><i class="fa fa-th"></i> Back to list</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

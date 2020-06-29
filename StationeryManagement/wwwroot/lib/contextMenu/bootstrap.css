@@ -1,0 +1,12 @@
+.dropdown-menu > li > a {
+    display: block;
+    padding: 3px 15px;
+    clear: both;
+    font-weight: 400;
+    line-height: 1.7;
+    white-space: nowrap;
+}
+
+.dropdown-menu {
+    min-width: 7rem;
+}

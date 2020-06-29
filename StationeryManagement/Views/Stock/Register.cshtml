@@ -1,0 +1,78 @@
+﻿
+@model StockRegisterViewModel
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a asp-controller="Home" asp-action="Index">Home</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a asp-controller="SiteTemplate" asp-action="Index">Stocks</a>
+    </li>
+    <li class="breadcrumb-item active">New product</li>
+</ol>
+<div class="container-fluid">
+    <div class="animated fadeIn">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <strong>New product</strong>
+                        <span class="badge-pill badge-success float-right">@ViewBag.Message</span>
+                    </div>
+                    <form id="registerForm" asp-action="Register" method="post" class="form-horizontal" role="form" enctype="multipart/form-data">
+                        <div class="card-body was-validated">
+                            <span class="text-danger">* is required field</span>
+                            <div asp-validation-summary="All" class="text-danger"></div>
+
+                            <div class="form-group row">
+                                <label class="col-md-4 form-control-label" for="inputProduct">Product</label>
+                                <div class="col-md-7">
+                                    <select id="productSearch" asp-items="@Model.Products" class="form-control" selected="Selected"></select>
+                                    <span asp-validation-for="Products" class="text-danger"></span>
+                                    <input type="hidden" name="productSearchString" id="productSearchString">
+                                </div>
+                                <div class="col-md-1">
+                                    <span class="text-danger">*</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="inputUsername">Price</label>
+                                <div class="col-md-8">
+                                    <input asp-for="Price" id="inputUsername" class="form-control is-invalid" required placeholder="Price" />
+                                    <span asp-validation-for="Price" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-1">
+                                    <span class="text-danger">*</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="inputQuantity">Quantity</label>
+                                <div class="col-md-8">
+                                    <input asp-for="Quantity" id="inputQuantity" class="form-control is-invalid" required placeholder="Quantity" />
+                                    <span asp-validation-for="Quantity" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-1">
+                                    <span class="text-danger">*</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button id="btnRegister" class="btn btn-sm btn-primary"><i class="fa fa-save"></i> Add new stock</button>
+                            <a asp-action="Index" class="btn btn-sm btn-info"><i class="fa fa-th"></i> Back to list</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+    {
+    <script type="text/javascript">
+    $(function () {
+            $('#btnRegister').click(function () {
+                $('#productSearchString').val($('#productSearch option:selected').val());
+                $('#registerForm').submit();
+            });
+        });</script>
+}

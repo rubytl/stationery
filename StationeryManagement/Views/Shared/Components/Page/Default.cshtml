@@ -1,0 +1,74 @@
+﻿@model PageViewModel
+@if (Model != null)
+{
+    <div class="row mx-0">
+        <ul class="pagination col-md-8">
+            <li class="page-item">
+                @if (@Model.PreviousPage == 1)
+                {
+                    <a>Prev</a>
+                }
+                else
+                {
+                    <a asp-controller="@Model.ControllerName" asp-action="@Model.ActionName" class="page-link" asp-route-page="@Model.PreviousPage" asp-route-parametersSearch="@Model.Parameters" asp-route-pageSizeString="@Model.PageSize">Prev</a>
+                }
+            </li>
+            @if (Model.PageCount > 10)
+            {
+                var maxPage = Model.CurrentPage + 5 > Model.PageCount ? Model.PageCount : Model.CurrentPage + 5;
+                var minPage = Model.CurrentPage - 5 < 1 ? 1 : Model.CurrentPage - 5;
+                @for (int i = minPage; i <= maxPage; i++)
+                {
+                    if (Model.CurrentPage == i)
+                    {
+                        <li class="page-item active">
+                            <a>@i</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="page-item">
+                            <a asp-controller="@Model.ControllerName" asp-action="@Model.ActionName" class="page-link" asp-route-page="@i" asp-route-parametersSearch="@Model.Parameters" asp-route-pageSizeString="@Model.PageSize">@i</a>
+                        </li>
+                    }
+                }
+            }
+            else
+            {
+                @for (int i = 1; i <= Model.PageCount; i++)
+                {
+                    if (Model.CurrentPage == i)
+                    {
+                        <li class="page-item active">
+                            <a>@i</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="page-item">
+                            <a asp-controller="@Model.ControllerName" asp-action="@Model.ActionName" class="page-link" asp-route-page="@i" asp-route-parametersSearch="@Model.Parameters" asp-route-pageSizeString="@Model.PageSize">@i</a>
+                        </li>
+                    }
+                }
+
+            }
+            <li class="page-item">
+                @if (@Model.NextPage == Model.PageCount)
+                {
+                    <a>Next</a>
+                }
+                else
+                {
+                    <a asp-controller="@Model.ControllerName" asp-action="@Model.ActionName" class="page-link" asp-route-page="@Model.NextPage" asp-route-parametersSearch="@Model.Parameters" asp-route-pageSizeString="@Model.PageSize">Next</a>
+                }
+            </li>
+        </ul>
+
+        <div class="col-md-4">
+            <div class="row">
+                <label class="col-md-4 col-form-label text-primary">Page Size</label>
+                <select class="form-control col-md-8 form-control-sm" asp-controller="@Model.ControllerName" asp-action="@Model.ActionName" id="pageSize" onchange="onPageSizeChanged()" asp-items="@Model.PageOptions" asp-for="@Model.PageSize"></select>
+            </div>
+        </div>
+    </div>
+}

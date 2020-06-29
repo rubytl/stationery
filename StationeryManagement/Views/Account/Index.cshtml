@@ -1,0 +1,137 @@
+﻿@model UserListViewModel
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a asp-controller="Home" asp-action="index">Home</a>
+    </li>
+    <li class="breadcrumb-item active">Users</li>
+</ol>
+<div class="container-fluid">
+    <div class="animated fadeIn">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fa fa-align-justify"></i>
+                        <strong>Users</strong>
+                        @if (ViewBag.Message != null)
+                        {
+                            <span class="badge-pill badge-success float-right">@ViewBag.Message</span>
+                        }
+                    </div>
+                    <div class="card-body">
+                        <form id="userAction">
+                            <input type="hidden" id="userIds" name="userIds">
+                            <button asp-controller="Account" asp-action="Register" class="btn btn-primary"><i class="fa fa-user-plus"></i> Add new user</button>
+                            <button id="btnDelete" asp-controller="Account" asp-action="DeleteUser" class="btn btn-danger"><i class="fa fa-user-times"></i> Delete users</button>
+                        </form>
+                        <div class="mt-3"></div>
+                        <form id="userRequest" asp-controller="Account" asp-action="Index" method="get" class="inlinesearch">
+                            <input type="hidden" name="pageSizeString" id="pageSizeString">
+                            <input type="hidden" id="parametersSearch" name="parametersSearch">
+                            <div class="table-responsive">
+                                <table class="table table-hover table-outline">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th><input type="checkbox" id="allUserSelection" /></th>
+                                            <th>Action</th>
+                                            <th>
+                                                <i class="icon-people"></i>
+                                            </th>
+                                            <th>
+                                                User name
+                                            </th>
+                                            <th>
+                                                Email
+                                            </th>
+                                            <th>Is active</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td><button id="btnSearch" class="btn btn-primary"><i class="fa fa-search"></i> Search</button></td>
+                                            <td></td>
+                                            <td><input id="inputUsername" asp-for="Request.Name" class="form-control" placeholder="User name"></td>
+                                            <td><input id="inputEmail" asp-for="Request.Email" class="form-control" placeholder="Email"></td>
+                                            <td><input id="inputActive" type="checkbox" checked="@Model.Request.IsActive" value="true"></td>
+                                        </tr>
+                                        @foreach (var item in Model.Users)
+                                        {
+                                            <tr>
+                                                <th><input type="checkbox" id="@item.Id" name="cbUser" /></th>
+                                                <td>
+                                                    <a asp-controller="Account" asp-route-id="@item.Id" asp-action="Details"><i class="fa fa-edit"></i></a>
+                                                    <a asp-action="DeleteUser" asp-route-userIds="@item.Id"><img src="~/img/delete.png"></a>
+                                                </td>
+                                                <td>
+                                                    <div class="avatar"><img class="img-avatar" src="~/@item.ImageSource"></div>
+                                                </td>
+                                                <td>@item.UserName</td>
+                                                <td>@item.Email</td>
+                                                <td><input type="checkbox" readonly checked="@item.IsActive" /></td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                        @await Component.InvokeAsync("Page", new { model = Model.Page })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.conainer-fluid -->
+    </div>
+</div>
+@section Scripts
+    {
+    <script type="text/javascript">
+        function updateParametersSearch() {
+            var parameters = {
+                name: $('#inputUsername').val(),
+                email: $('#inputEmail').val(),
+                isActive: $('#inputActive').is(':checked')
+            };
+            $('#parametersSearch').val(JSON.stringify(parameters));
+            $('#pageSizeString').val($('#pageSize').val());
+        }
+
+        function onPageSizeChanged() {
+            updateParametersSearch();
+            $('#userRequest').submit();
+        }
+
+        $(document).ready(function () {
+            $('#btnSearch').click(function () {
+                updateParametersSearch();
+            });
+
+            $('#btnDelete').click(function () {
+                var ids = "";
+                document.getElementsByName('cbUser').forEach(s => {
+                    if (s.checked) {
+                        ids += s.id + ",";
+                    }
+                });
+
+                if (ids !== "") {
+                    // remove last character
+                    ids = ids.slice(0, -1);
+                }
+
+                $('#userIds').val(ids);
+                $('#userAction').submit();
+            });
+
+            $('#allUserSelection').change(function () {
+                if (this.checked) {
+                    // the checkbox is now checked
+                    document.getElementsByName('cbUser').forEach(s => s.checked = true);
+                } else {
+                    // the checkbox is now no longer checked
+                    document.getElementsByName('cbUser').forEach(s => s.checked = false);
+                }
+            });
+        });
+    </script>
+}

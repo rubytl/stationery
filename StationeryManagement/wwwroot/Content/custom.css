@@ -1,0 +1,197 @@
+﻿.file {
+    visibility: hidden;
+    position: absolute;
+}
+
+.textright {
+    text-align: right;
+}
+
+.ordertypehighlight {
+    color: darkorange;
+    font-weight: bold;
+}
+
+.lablesearch {
+    margin-left: 20px;
+    margin-right: 10px;
+}
+
+.inlinesearch {
+    margin-bottom: 5px;
+}
+
+.redzone-map {
+    height: 80vh;
+}
+
+.bin-map {
+    height: 10rem;
+}
+
+.progress-group {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-flow: row wrap;
+    flex-flow: row wrap;
+    margin-bottom: 1rem;
+}
+
+.progress-group-header {
+    display: -ms-flexbox;
+    display: flex;
+    flex-basis: 100%;
+    -ms-flex-align: end;
+    align-items: flex-end;
+    margin-bottom: .25rem;
+}
+
+.progress-group-bars {
+    flex-grow: 1;
+    -ms-flex-item-align: center;
+    align-self: center;
+}
+
+.progress-group-header + .progress-group-bars {
+    flex-basis: 100%;
+}
+
+.callout .chart-wrapper {
+    top: 25px;
+    left: 35%;
+}
+
+.navbar-brand-grenpak {
+    max-width: 50%;
+}
+
+.navbar-brand-ibin {
+    display: inline-block;
+    width: 155px;
+    height: 55px;
+    background-image: url(../img/ibin.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 90px auto;
+}
+
+.navbar-brand-vodafone {
+    display: inline-block;
+    width: 80px;
+    height: 50px;
+    background-image: url(../img/vodafone.PNG);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 50px auto;
+}
+
+.full-level-gauge {
+    max-width: 180%;
+}
+
+@media (max-width: 375px) {
+    .logo-navbar-nav {
+        max-width: 20% !important;
+    }
+}
+
+@media (max-width: 1024px) {
+    .full-level-gauge {
+        max-width: 140%;
+    }
+}
+
+@media (max-width: 991px) {
+    .logo-navbar-nav {
+        left: 0 !important;
+    }
+
+    .sidebar-navbar-nav {
+        left: 60px !important;
+    }
+
+    .menu-navbar-nav {
+        left: 110px !important;
+    }
+}
+
+@media (max-width: 1024px) {
+    .navbar-brand-ibin {
+        width: 80px;
+    }
+
+    .line-chart-wrapper {
+        height: 20vh;
+    }
+}
+
+@media (min-width: 1025px) {
+    .line-chart-wrapper {
+        height: 33vh;
+    }
+}
+
+input[type="checkbox"][readonly] {
+    pointer-events: none;
+}
+
+.glyphicon {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.glyphicon-search:before {
+    content: "\f002";
+}
+
+.glyphicon-remove-circle:before {
+    content: "\f00d"
+}
+
+.multiselect-container > li > a > label {
+    padding: 3px 0px 3px 20px;
+}
+
+.dot {
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.td-wrap {
+    word-wrap: break-word;
+    max-width: 120px;
+}
+
+.action-td {
+    min-width: 90px;
+    word-wrap: break-word;
+}
+
+.td-height {
+    min-width: 130px;
+    word-wrap: break-word;
+}
+
+.site-form-control {
+    width: auto;
+    line-height: 1.25;
+}
+
+.site-setup-name {
+    min-width: 180px;
+    word-wrap: break-word;
+}
+
+body {
+    font-family: Poppins;
+    text-align: left;
+}
